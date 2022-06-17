@@ -1,4 +1,3 @@
 Hey There!
-Connect 4 project
-
-:)
+Connect-4
+:) 
