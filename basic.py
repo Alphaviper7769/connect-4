@@ -13,8 +13,21 @@ blank = np.ones(shape=[720, 1080, 3], dtype=np.uint8)*230
 # Every odd move is made by player
 move = 0
 
-# List of circles that have been filled already
-filled = []
+# Cirlces filled in each Column
+filled = {
+    1: 0,
+    2: 0,
+    3: 0,
+    4: 0,
+    5: 0,
+    6: 0,
+    7: 0,
+    8: 0,
+    9: 0,
+    10: 0,
+    11: 0,
+    12: 0
+}
 
 def drawEmptyBoard():
     global blank
@@ -31,7 +44,7 @@ def drawEmptyBoard():
 def addToken(x, y, color):
     #    x -> [1,12]     y -> [1, 8]
     global blank, filled
-    filled.append([x, y])
+    filled[x] = y
     x = x*25 + (x-1)*2*RADIUS + 90
     y = y*12 + (y-1)*2*RADIUS + 225
     cv2.circle(blank, (x, y), RADIUS, color, -1)
@@ -41,10 +54,9 @@ def addToken(x, y, color):
 def click_event(event, x, y, flags, params):
     global move, filled
     if event == cv2.EVENT_LBUTTONDOWN:
-        xCord, yCord = checkClick(x, y)
-        print(filled)
-        print(xCord, yCord)
-        if(xCord > 0 and yCord > 0 and filled.count([xCord, yCord]) == 0):
+        xCord = checkClick(x, y)
+        if(xCord > 0 and filled[xCord] < 8):
+            yCord = filled[xCord]+1
             move += 1
             if move%2 == 1:
                 addToken(xCord, yCord, PLAYER)
@@ -56,8 +68,8 @@ def checkClick(x, y):
     for i in range(0, 8):
         for j in range(0, 12):
             if x <= (j+1)*25 + j*2*RADIUS + 90 + RADIUS and x >= (j+1)*25 + j*2*RADIUS + 90 - RADIUS and y <= (i+1)*12 + i*2*RADIUS + 225 + RADIUS and y >= (i+1)*12 + i*2*RADIUS + 225 - RADIUS:
-                return j+1, i+1
-    return -1, -1
+                return j+1
+    return -1
 
 drawEmptyBoard()
 
