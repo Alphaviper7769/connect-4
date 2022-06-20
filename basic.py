@@ -15,18 +15,18 @@ move = 0
 
 # Cirlces filled in each Column
 filled = {
-    1: 0,
-    2: 0,
-    3: 0,
-    4: 0,
-    5: 0,
-    6: 0,
-    7: 0,
-    8: 0,
-    9: 0,
-    10: 0,
-    11: 0,
-    12: 0
+    1: 9,
+    2: 9,
+    3: 9,
+    4: 9,
+    5: 9,
+    6: 9,
+    7: 9,
+    8: 9,
+    9: 9,
+    10: 9,
+    11: 9,
+    12: 9
 }
 
 def drawEmptyBoard():
@@ -55,8 +55,8 @@ def click_event(event, x, y, flags, params):
     global move, filled
     if event == cv2.EVENT_LBUTTONDOWN:
         xCord = checkClick(x, y)
-        if(xCord > 0 and filled[xCord] < 8):
-            yCord = filled[xCord]+1
+        if(xCord > 0 and filled[xCord] > 1):
+            yCord = filled[xCord]-1
             move += 1
             if move%2 == 1:
                 addToken(xCord, yCord, PLAYER)
