@@ -1,5 +1,7 @@
 import cv2
 import numpy as np
+import time
+from brain import checkWin
 
 # Constant variables
 RADIUS = 25
@@ -74,6 +76,10 @@ def checkClick(x, y):
 drawEmptyBoard()
 
 while True:
+    check = checkWin(blank)
+    if check[0] != 0:
+        cv2.rectangle(blank, (200, 350), (800, 550), (255, 0, 0), -1)
+        cv2.putText(blank, text=f"{check[0]} has WON", org=(220, 470), fontFace=cv2.FONT_HERSHEY_TRIPLEX, fontScale=3, color=(255, 255, 255), thickness=2)
     cv2.imshow("Play Area", blank)
     cv2.setMouseCallback("Play Area", click_event)
     if cv2.waitKey(1) & 0xFF == ord('q'):
